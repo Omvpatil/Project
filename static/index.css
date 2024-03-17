@@ -1,0 +1,173 @@
+:root{
+    font-size: 16px;
+    font-family:'Jaldi';
+    --text-primary : #362F2F;
+    --text-secondary : #9E9C9C;
+    --bg-dark : #362F2F;
+    --bg-light :#9E9C9C;
+    --dist : 5px;
+}
+.nav-bar{
+    color: #000000;
+    background-color:rgb(255, 255, 255);
+    margin-left: var(--dist);
+    width: 4rem;
+    height:100vh;
+    background-color: var(--bg-light);
+    position:absolute;
+    border-radius: 10px;
+    transition: 200ms;
+    
+}
+.nav-item{
+    display: flex;
+    padding: 0;
+    margin: 0.50rem;
+    flex-direction: column;
+    transition: 200ms;
+}
+.menu{position: fixed;
+    margin-left: 5rem ;
+    margin-top: 0rem;
+    padding-top: 0.001rem;
+    height: 100vh;
+    width: 100%;
+    background-color: var(--bg-dark);
+    border-radius: 10px;
+    
+    align-items: center;
+    color: var(--text-secondary);
+    
+}
+.nav-bar:hover .hr{
+    color: var(--bg-dark);
+    width: 2rem;
+}
+.welcome{
+    margin-left: 1rem;
+    font-size:5rem;
+}
+.menu .content-load-quote{
+    margin-left: 5rem;
+    margin-top: 4.5rem;
+    margin-right: var(--dist);
+    background-color: var(--bg-light);
+    height:24rem;
+    width: 40rem;
+    border-radius: 10px;
+    text-wrap: wrap;
+    color: var(--bg-dark);
+    padding-left: 1rem;
+    padding-top: 1rem;
+    font-size: 1.5rem;
+}
+.menu .content-pt{
+    margin-left: 5rem;
+    margin-top: 4.5rem;
+    margin-right: var(--dist);
+    background-color: var(--bg-light);
+    height:24rem;
+    width: 40rem;
+    border-radius: 10px;
+    color: var(--bg-dark);
+    padding-left: 1rem;
+    padding-top: 1rem;
+    font-size: 1.5rem;
+}
+
+label[for="task"] {
+    height: 1rem;
+    width: 2rem;
+    color: var(--text-secondary);
+}
+
+/* Input for Task */
+input#task {
+    /* Your styles for the input */
+}
+
+/* Label for Description */
+label[for="description"] {
+    /* Your styles for the label */
+}
+
+/* Textarea for Description */
+textarea#description {
+    /* Your styles for the textarea */
+}
+
+/* Input for Submit */
+input[type="submit"] {
+    /* Your styles for the submit button */
+}
+
+
+.time-table{
+    background-color:var(--bg-dark);
+    margin-left:0.35rem;
+    margin-bottom: 0.65rem;
+    position:relative;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    height: 6rem;
+    width: 100%;
+    font-size: 2rem;
+}
+.title{
+    position:relative;
+    margin-left: 1rem;
+    margin-top: 0.1rem; 
+    text-wrap:nowrap;
+}
+
+
+.nav-item{
+    width: 100%;
+    align-items: center;
+}
+.nav-item:last-child{
+    margin-top: auto;
+}
+.nav-link{
+    display: flex;
+    align-items: center;
+    height : 5rem;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+.link-text{
+    display: none;
+    margin-left: 1rem;
+}
+.nav-link fa-solid fa-bars{
+    min-width: 2rem;
+    margin: 0 1.5rem;
+}
+.nav-bar:hover{
+    width: 10rem;
+    box-shadow: 0rem 1rem 1rem ;
+    z-index: 3;
+}
+.nav-bar:hover .link-text{
+    display: block;
+    font-family: 'Jaldi';
+}
+.nav{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.jaldi-regular {
+    font-family: "Jaldi", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+.jaldi-bold {
+    font-family: "Jaldi", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }

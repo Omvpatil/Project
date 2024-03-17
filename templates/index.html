@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Table Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<script>
+    function showDiv(divId) {
+        // Hide all divs with class name starting with "content"
+        var divs = document.querySelectorAll('div[class^="content"]');
+        for (var i = 0; i < divs.length; i++) {
+            divs[i].style.display = 'none';
+        }
+        // Show the selected div
+        document.getElementById(divId).style.display = 'block';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var menuDiv = document.querySelector('.menu');
+        menuDiv.addEventListener('click', function() {
+            showDiv('content-load-quote'); // Show the content-load-quote div when the menu div is clicked
+        });
+
+        var navLinks = document.querySelectorAll('.nav-link');
+        for (var i = 0; i < navLinks.length; i++) {
+            navLinks[i].addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent the default link behavior
+                var targetDivId = this.getAttribute('data-target'); // Get the data-target attribute value
+                showDiv(targetDivId); // Call the showDiv function with the target div id
+            });
+        }
+    });
+</script>
+
+
+<body >
+    <div class="time-table">
+        <div class="title">
+            <h1>Time-table</h1>
+        </div>
+    </div>
+    <nav class="nav-bar">
+        <ul class="nav">
+            <li class="nav-item"><a href="#" class="nav-link" onclick="showDiv('quote')"><i class="fa-solid fa-list-ul"></i><span class="link-text">Menu</span></a></li>
+            <hr class="hr"></hr>
+            <li class="nav-item"><a href="#" class="nav-link" onclick="showDiv('prior-tasks')"><span class="link-text">Prior Tasks</span></a></li>
+            <hr class="hr"></hr>
+            <li class="nav-item"><a href="#"><span class="link-text">Todays Goal</span></a></li>
+            <hr class="hr"></hr>
+            <li class="nav-item"><a href="#"><span class="link-text">Schedule</span></a></li>
+            <hr class="hr"></hr>
+            <li class="nav-item"><a href="#"><span class="link-text">Add Task</span></a></li>
+            <hr class="hr"></hr>
+            <li class="nav-item"><a href="#"><span class="link-text">AI Consultant</span></a></li>
+            <hr class="hr"></hr>
+            <li class="nav-item"><a href="#"><span class="link-text">Free Time</span></a></li>
+            <hr class="hr"></hr>
+            <li class="nav-item"><a href="#"><span class="link-text">Hobbies</span></a></li>
+            <hr class="hr"></hr>
+            <li class="nav-item"><a href="#"><span class="link-text">Contact us</span></a></li>
+        </ul>
+    </nav>
+    
+    <div class="menu">
+
+        <div class="content-load-quote" id="quote" style="display: block;">
+            <form>
+            <span class="welcome">
+                Welcome
+            </span>
+            <div id="quote-box">
+
+                <p class="quote">{{ quotes_list['quote'] }}</p>
+                <p class="source"> - {{ quotes_list['source'] }}</br><span class="citation">Citation : {{ quotes_list['citation'] }}</span></br><span class="year">Year : {{ quotes_list['year'] }}</span></p>
+
+            </div>
+            </form>
+        </div>
+        <div class="content-pt" id="prior-tasks" style="display: none;">
+            <form>
+                <span class="welcome">
+                     Prior-tasks
+                </span>
+                <label for="task">Task:</label><br>
+                <input type="text" id="task" name="task"><br>
+                <label for="description">Description:</label><br>
+                <textarea id="description" name="description"></textarea><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
