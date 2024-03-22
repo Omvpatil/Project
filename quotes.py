@@ -1,7 +1,7 @@
 import json
 import random 
 
-f = open('quotes.json')
+f = open('Project\quotes.json')
 
 quotes_dict = json.load(f)
 all_the_quotes = list(quotes_dict["quotes_list"])

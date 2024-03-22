@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+{% block att %}
+<link rel="stylesheet" href="/Project/static/index.css">
+<div class="content-pt" style="display: block;">
+    <form method="post" action="/prior-tasks" >
+        <span class="pt">
+             Prior-tasks
+        </span>
+        <br>
+        <label for="task">Task:</label><br>
+        <input type="text" id="task" name="task" ><br>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<div class="pre-content">
+    <pre>{{pre_con}}</pre>
+</div>
+{% endblock %}
