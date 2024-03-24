@@ -12,7 +12,7 @@
     background-color:rgb(255, 255, 255);
     margin-left:0.1rem;
     width: 4rem;
-    height:86.5vh;
+    height:83vh;
     background-color: var(--bg-dark);
     position:absolute;
     border-radius: 10px;
@@ -27,8 +27,9 @@
 .nav-bar:hover{
     margin-top: -6.5rem;
     padding-bottom: 2.8rem;
+    height:89vh;
     width: 15rem;
-    box-shadow: 0rem 20rem 100rem 1rem;
+    box-shadow: 0rem 20rem 100rem 1rem #000000;
     z-index: 3;
     padding-top: 2rem;
     border: var(--text-primary);
@@ -351,4 +352,16 @@ input[type="submit"]:hover{
 }
 .fa-solid :hover{
     padding-left: 1rem;
+}
+.info{
+    background-color: var(--text-primary);
+    position:absolute;
+    margin-left: 20rem;
+    margin-top:1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 10px;
+    font-family: 'Jaldi';
+    font-size: 2rem;
+    color: var(--text-secondary);
 }
