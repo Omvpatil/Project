@@ -18,6 +18,13 @@
             Date : {{today}}<br>
             Day  : {{day_name}}
         </div>
+        <div class="info">
+            {% if name %}
+                Hello ! {{name}}
+            {% else %}
+                Hello !
+            {%endif%}
+        </div>
         <div class="title">
             <h1>Time-table</h1>
         </div>
@@ -28,15 +35,11 @@
             <hr class="hr"></hr>
             <li class="nav-item"><a href="{{ url_for('priorTask') }}" class="nav-link"><span class="link-text">Prior Tasks</span></a></li>
             <hr class="hr"></hr>
-            <li class="nav-item"><a href="#" class="nav-link" ><span class="link-text">Todays Goal</span></a></li>
-            <hr class="hr"></hr>
             <li class="nav-item"><a href="#" class="nav-link" ><span class="link-text">Schedule</span></a></li>
             <hr class="hr"></hr>
             <li class="nav-item"><a href="#" class="nav-link" ><span class="link-text">Add Task</span></a></li>
             <hr class="hr"></hr>
             <li class="nav-item"><a href="#" class="nav-link" ><span class="link-text">AI Consultant</span></a></li>
-            <hr class="hr"></hr>
-            <li class="nav-item"><a href="#" class="nav-link" ><span class="link-text">Free Time</span></a></li>
             <hr class="hr"></hr>
             <li class="nav-item"><a href="#" class="nav-link" ><span class="link-text">Hobbies</span></a></li>
             <hr class="hr"></hr>
@@ -67,7 +70,7 @@
                 </form>
             </div>
             <div class="pre-content">
-                <pre>{{pre_con}}</pre>
+                <pre><li>{{pre_con}}</li></pre>
             </div>
         {% endblock %}
             <!-- <img src="/Project/static/images.png" alt="" class="img"> -->
