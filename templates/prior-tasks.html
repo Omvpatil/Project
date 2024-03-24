@@ -15,6 +15,10 @@
     </form>
 </div>
 <div class="pre-content">
-    <pre>{{pre_con}}</pre>
+    {% for i in pre_con.split("_div_")%}
+    <li>
+        <pre>{{i}}</pre>
+    </li>
+    {%endfor%}
 </div>
 {% endblock %}
