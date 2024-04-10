@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+{% block att %}
+    <link rel="stylesheet" href="/static/index.css">
+    <script src="https://cdn.jsdelivr.net/gh/bevacqua/dragula@3.7.3/dist/dragula.min.js"></script>
+    <scrip src="index.js"></scrip>
+        <div class="content-pt">
+            {% for event in calendar_events %}
+            <div class="event">
+                <h3>{{ event['event_name'] }}</h3>
+                <p><strong>Start:</strong> {{ event['start_time'] }}</p>
+                <p><strong>End:</strong> {{ event['end_time']}}</p>
+                <p><strong>Details: </strong>{{ event['describe']}}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="pre-content">
+    <form method="post" action="/calender" >
+        <span class="pt">
+             Add Events
+        </span>
+        <br>
+        <label for="task">Event</label><br>
+        <input type="text" id="task" name="event" ><br>
+        <label for="task">Start</label><br>
+        <input type="text" id="task" name="start" ><br>
+        <label for="task">End</label><br>
+        <input type="text" id="task" name="end" ><br>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+        </div>
+{% endblock %}

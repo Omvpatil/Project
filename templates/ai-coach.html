@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+{% block att %}
+<div class="content-pt" style="display: block;">
+    <form method="post" action="/ai-coach" >
+        <span class="pt">
+             Your AI coach
+        </span>
+        <br>
+        <label for="task">Enter Prompt:</label><br>
+        <textarea id="description" name="description"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<div class="pre-content">
+    <p id="responseText"></p>
+</div>
+
+<script>
+    var responseAi = "{{ responseAi }}";
+    var index = 0;
+
+    function printNextCharacter() {
+        if (index < responseAi.length) {
+            document.getElementById("responseText").innerHTML += responseAi.charAt(index);
+            index++;
+            setTimeout(printNextCharacter, 250);
+        }
+    }
+
+    printNextCharacter();
+</script>
+
+
+{% endblock %}

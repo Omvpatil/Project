@@ -1,10 +1,11 @@
-import json
 import os
 import requests
+import json
+import AI_coatch
 
 from datetime import date
 from authlib.integrations.flask_client import OAuth
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify
 
 import quotes as quotes
 
@@ -45,7 +46,7 @@ def google_login():
 
 @app.route('/callback')
 def googleCallback():
-    token = oauth.TimetableManager.authorize_access_token()
+    token = oauth.google.authorize_access_token()
     session["user"] = token
     personDataUrl = "https://www.googleapis.com/oauth2/v1/userinfo"
     personData = requests.get(
@@ -64,24 +65,41 @@ def googleCallback():
 @app.route("/")
 def home():
     quotes_list = quotes.printQuote()
-    today = date.today()
-    reversed_date = today.strftime("%d-%m-%Y")
-    day_name = today.strftime('%a')
-    user_photo = session.get("picture")
-    return render_template("index.html", quotes_list=quotes_list, pre_con=preCon(), today=format(reversed_date),
+    name, user_photo = userDataProfile()
+    reversed_date, day_name = Date()
+
+    return render_template("index.html", quotes_list=quotes_list, pre_con=preCon(), today=reversed_date,
                            day_name=day_name,
-                           photo=user_photo, pretty=json.dumps(session.get("user"), indent=4))
+                           photo=user_photo, pretty=name)
 
 
 @app.route("/prior-tasks", methods=["GET", "POST"])
 def priorTask():
+    today = date.today()
+    reversed_date, day_name = Date()
+    name, user_photo = userDataProfile()
+
     if request.method == "POST":
-        taskGet = f"task :" + request.form['task'] + f"\n"
-        descriptionGet: str = f"description :" + request.form['description'] + f"\n"
-        with open("task.txt", "a") as file:
-            file.write(f"""{taskGet}\n{descriptionGet}""")
-        return render_template("prior-tasks.html", pre_con=preCon())
-    return render_template("prior-tasks.html", pre_con=preCon())
+        task = request.form['task']
+        description = request.form['description']
+
+        task_data = {
+            'task': task,
+            'description': description
+        }
+
+        try:
+            with open("task.json", "r") as file:
+                data = json.load(file)
+        except (FileNotFoundError, json.decoder.JSONDecodeError):
+            data = []
+
+        data.append(task_data)
+        with open("task.json", "w") as file:
+            json.dump(data, file, indent=4)
+
+    return render_template("prior-tasks.html", pre_con=preCon(), today=reversed_date,
+                           day_name=day_name, photo=user_photo, pretty=name)
 
 
 @app.route("/logout")
@@ -90,36 +108,68 @@ def logout():
     return redirect(url_for("home"))
 
 
-def fetch_profile_photo(access_token):
-    personDataUrl = "https://people.googleapis.com/v1/people/me?personFields=photos"
-    response = requests.get(
-        personDataUrl,
-        headers={
-            "Authorization": f"Bearer {access_token}",
-            "Accept": "application/json"
-        }
-    )
-    if response.status_code == 200:
-        data = response.json()
-        if "photos" in data:
-            photos = data["photos"]
-            if photos:
-                # Assuming the first photo is the profile photo
-                return photos[0]["url"]
-    return None
+@app.route("/ai-coach", methods=["GET", "POST"])
+def ai():
+    if request.form.get("description"):
+        prompt = request.form.get("description")
+    else:
+        prompt = "Tell me about how to maintain timetable for longer periods"
+    responseAi = AI_coatch.generate_prompt(prompt)
+    return render_template("/ai-coach.html", responseAi=responseAi)
+
+
+@app.route("/calender", methods=["GET", "POST"])
+def calender():
+    with open('events.json') as i:
+        event_data = json.load(i)
+    Evnt = f"{request.form.get('event')}"
+    StrTim = f"{request.form.get('start')}"
+    EndTim = f"{request.form.get('end')}"
+    Dscr = f"{request.form.get('description')}"
+    new_event = {
+        "event_name": Evnt,
+        "start_time": StrTim,
+        "end_time": EndTim,
+        "describe": Dscr
+    }
+    if all([Evnt, StrTim, EndTim, Dscr]):
+        event_data.append(new_event)
+        with open("events.json", 'w') as file:
+            json.dump(new_event, file, indent=4)
+    name, user_photo = userDataProfile()
+    reversed_date, day_name = Date()
+
+    return render_template('calender.html', today=reversed_date, day_name=day_name,
+                           photo=user_photo, pretty=name, calendar_events=event_data)
 
 
 def preCon():
-    if is_file_empty("task.txt"):
-        return "No tasks remaining!"
-    else:
-        with open("task.txt", "r") as file:
-            text = file.read()
-            return text
+    with open("task.json", "r") as file:
+        tasks = json.load(file)
+    return tasks
+
+
+def userDataProfile():
+    user_photo = session.get("picture")
+    nameData = session.get("user")
+    name = ""
+    user_photo = None
+
+    if nameData:
+        name = nameData.get("personData", {}).get("name")
+        user_photo = session.get("picture")
+    return name, user_photo
 
 
 def is_file_empty(file_path):
     return os.path.getsize(file_path) == 0
+
+
+def Date():
+    today = date.today()
+    reversed_date = today.strftime("%d-%m-%Y")
+    day_name = today.strftime('%a')
+    return format(reversed_date), day_name
 
 
 if __name__ == "__main__":
