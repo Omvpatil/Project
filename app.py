@@ -75,7 +75,6 @@ def home():
 
 @app.route("/prior-tasks", methods=["GET", "POST"])
 def priorTask():
-    today = date.today()
     reversed_date, day_name = Date()
     name, user_photo = userDataProfile()
 
@@ -83,23 +82,30 @@ def priorTask():
         task = request.form['task']
         description = request.form['description']
 
-        task_data = {
-            'task': task,
-            'description': description
-        }
+        if task or description:
+            task_data = {
+                'task': task,
+                'description': description
+            }
 
-        try:
-            with open("task.json", "r") as file:
-                data = json.load(file)
-        except (FileNotFoundError, json.decoder.JSONDecodeError):
-            data = []
+            try:
+                with open("task.json", "r") as file:
+                    file_contents = file.read()
+                data = json.loads(file_contents)
+                tasks = data.get("tasks", [])
+            except (FileNotFoundError, json.decoder.JSONDecodeError):
+                tasks = []
 
-        data.append(task_data)
-        with open("task.json", "w") as file:
-            json.dump(data, file, indent=4)
+            if not any(d['task'] == task and d['description'] == description for d in tasks):
+                tasks.append(task_data)
 
-    return render_template("prior-tasks.html", pre_con=preCon(), today=reversed_date,
-                           day_name=day_name, photo=user_photo, pretty=name)
+                with open("task.json", "w") as file:
+                    json.dump({"tasks": tasks}, file, indent=4)
+
+    tasks = preCon()
+
+    return render_template("prior-tasks.html", pre_con=tasks, today=reversed_date,
+                           day_name=day_name, photo=user_photo, pretty=name, tasks=tasks)
 
 
 @app.route("/logout")
@@ -110,42 +116,59 @@ def logout():
 
 @app.route("/ai-coach", methods=["GET", "POST"])
 def ai():
+    reversed_date, day_name = Date()
+    name, user_photo = userDataProfile()
     if request.form.get("description"):
         prompt = request.form.get("description")
     else:
         prompt = "Tell me about how to maintain timetable for longer periods"
-    responseAi = AI_coatch.generate_prompt(prompt)
-    return render_template("/ai-coach.html", responseAi=responseAi)
+    responseai = AI_coatch.generate_prompt(prompt)
+    return render_template("/ai-coach.html", responseAi=responseai, pre_con=preCon(), today=reversed_date,
+                           day_name=day_name,
+                           photo=user_photo, pretty=name)
 
 
-@app.route("/calender", methods=["GET", "POST"])
-def calender():
-    with open('events.json') as i:
-        event_data = json.load(i)
-    Evnt = f"{request.form.get('event')}"
-    StrTim = f"{request.form.get('start')}"
-    EndTim = f"{request.form.get('end')}"
-    Dscr = f"{request.form.get('description')}"
-    new_event = {
-        "event_name": Evnt,
-        "start_time": StrTim,
-        "end_time": EndTim,
-        "describe": Dscr
-    }
-    if all([Evnt, StrTim, EndTim, Dscr]):
-        event_data.append(new_event)
-        with open("events.json", 'w') as file:
-            json.dump(new_event, file, indent=4)
+@app.route("/calendar", methods=["GET", "POST"])
+def calendar():
+    if request.method == "POST":
+        Evnt = request.form['event']
+        StrTim = request.form['start_time']
+        EndTim = request.form['end_time']
+        Dscr = request.form['describe']
+
+        new_event = {
+            "event": Evnt,
+            "start_time": StrTim,
+            "end_time": EndTim,
+            "describe": Dscr
+        }
+
+        if all([Evnt, StrTim, EndTim, Dscr]):
+            try:
+                with open("events.json", 'r') as file:
+                    event_data = json.load(file)
+            except (FileNotFoundError, json.decoder.JSONDecodeError):
+                event_data = []
+
+            event_data.append(new_event)
+
+            with open("events.json", 'w') as file:
+                json.dump(event_data, file, indent=4)
+
     name, user_photo = userDataProfile()
     reversed_date, day_name = Date()
 
-    return render_template('calender.html', today=reversed_date, day_name=day_name,
-                           photo=user_photo, pretty=name, calendar_events=event_data)
+    return render_template("calendar.html", today=reversed_date, day_name=day_name, photo=user_photo, pretty=name)
 
 
 def preCon():
-    with open("task.json", "r") as file:
-        tasks = json.load(file)
+    try:
+        with open("task.json", "r") as file:
+            task_data = json.load(file)
+    except json.JSONDecodeError as e:
+        print("Error decoding task.json:", e)
+        task_data = {}
+    tasks = task_data.get("tasks", [])
     return tasks
 
 

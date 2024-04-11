@@ -2,14 +2,14 @@
 {% block att %}
     <link rel="stylesheet" href="/static/index.css">
     <script src="https://cdn.jsdelivr.net/gh/bevacqua/dragula@3.7.3/dist/dragula.min.js"></script>
-    <scrip src="index.js"></scrip>
+    <script src="../static/index.js"></script>
         <div class="content-pt">
             {% for event in calendar_events %}
             <div class="event">
-                <h3>{{ event['event_name'] }}</h3>
-                <p><strong>Start:</strong> {{ event['start_time'] }}</p>
-                <p><strong>End:</strong> {{ event['end_time']}}</p>
-                <p><strong>Details: </strong>{{ event['describe']}}</p>
+                <h3>{{ event.event_name}}</h3>
+                <p><strong>Start:</strong> {{ event.start_time }}</p>
+                <p><strong>End:</strong> {{ event.end_time }}</p>
+                <p><strong>Details: </strong>{{ event.describe }}</p>
             </div>
             {% endfor %}
         </div>

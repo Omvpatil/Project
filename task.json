@@ -1,22 +1,16 @@
-[
-    {
-        "task": "helloweqfet",
-        "description": "wgrwrtwet"
-    },
-    {
-        "task": "helloweqfet",
-        "description": "wgrwrtwet"
-    },
-    {
-        "task": "helloweqfet",
-        "description": "wgrwrtwet"
-    },
-    {
-        "task": "adsda",
-        "description": "awdasdawda"
-    },
-    {
-        "task": "adsda",
-        "description": "awdasdawda"
-    }
-]
+{
+    "tasks": [
+        {
+            "task": "adsdaw",
+            "description": "awdasdawd"
+        },
+        {
+            "task": "awdsda",
+            "description": "awdawdaw"
+        },
+        {
+            "task": "awdasd",
+            "description": "awdadsa"
+        }
+    ]
+}

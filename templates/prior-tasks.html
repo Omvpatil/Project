@@ -14,4 +14,32 @@
         <input type="submit" value="Submit">
     </form>
 </div>
+<div class="pre-content" id="pre-content">
+                {% if pre_con %}
+                    {% set preTask = "" %}
+                    {% for task in pre_con %}
+                        {% if preTask != task.task %}
+                            {% set preTask = task.task %}
+                            <div class="divchild" onclick="expandChild()">
+                                <div class="checkbox-wrapper-15">
+                                    <input class="inp-cbx" id="cbx-15" type="checkbox" style="display: none;"/>
+                                    <label class="cbx" for="cbx-15">
+                                      <span>
+                                        <svg width="12px" height="9px" viewbox="0 0 12 9">
+                                          <polyline points="1 5 4 8 11 1"></polyline>
+                                        </svg>
+                                      </span>
+                                      <span>{{ task.task }}: {{ task.description }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                <div class="divchild">
+                    <div>No tasks remaining!</div>
+                </div>
+                {% endif %}
+                </div>
+            </div>
 {% endblock %}

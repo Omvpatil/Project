@@ -6,9 +6,6 @@ f = open('quotes.json')
 quotes_dict = json.load(f)
 all_the_quotes = list(quotes_dict["quotes_list"])
 
-""" Fetch a random quote array from the data  
-    and return it """
-
 
 def getRandomQuote(quotes_list):
     random_num = random.randint(0, 5)
