@@ -7,6 +7,7 @@
     --bg-light :#a8dadc;
     --dist : 5px;
 }
+
 .nav-bar{
     color: var(--text-secondary);
     background-color:rgb(255, 255, 255);
@@ -149,7 +150,6 @@
     z-index:5;
     margin-left:0;
     margin-bottom:1rem;
-    padding-top:0.1rem;
     border-style:solid;
     transition:300ms;
     transition-delay:100ms;
@@ -158,7 +158,7 @@
     height:4rem;
     width:4rem;
     margin-left:-2.55rem;
-    margin-top:0.28rem;
+    margin-top:-0.28rem;
     transition:400ms;
     border-style:none;
     border-radius:90px;
@@ -179,7 +179,7 @@
 .nav-item20{
     padding-left:2rem;
 }
-nav2:hover .nav-item20{
+.nav2:hover .nav-item20{
     padding-left:2rem;
     margin-top:0.5rem;
 }
@@ -245,12 +245,11 @@ nav2:hover .nav-item20{
     transition: 300ms;
 }
 .menu{
-    position: absolute;
     margin-left: 5rem ;
     margin-top: 0rem;
     margin-right: auto;
     padding-top: 0.001rem;
-    padding-right: -2rem;
+    padding-right: 0.8rem;
     height: 86.5vh;
     width: 95%;
     background-image:url("/static/images.png");
@@ -513,7 +512,7 @@ input[type="submit"]:hover{
   }
 .bgnd{
     margin-top: 6rem;
-    font-size: 10rem;
+    font-size: 15rem;
     position: absolute;
     z-index: -1;
     color: #6c6868;
@@ -618,19 +617,21 @@ input[type="submit"]:hover{
     transform:translateX(0);
     transition:400ms;
 }
+.adjusting {
+  animation: slide-up 1s ease-in-out;
+  animation-fill-mode: forwards;
+  transition-delay:500ms;
+}
 @keyframes slide-up {
   from {
-    transform: translateY(0);
+    margin-top: auto;
   }
   to {
-    transform: translateY(-100%);
-    height: 0;
+    margin-top: 1rem;
   }
 }
-.adjusting {
-  animation: slideUp 0.3s ease-in-out;
-  animation-fill-mode: forwards;
-}
+
+
 
 .divchild .text {
     font-size: 1.5rem;
@@ -737,6 +738,10 @@ input[type="submit"]:hover{
 }
 
 
+#editable {
+    background-color:yellow;
+    flex-direction:column;
+}
 
 
 

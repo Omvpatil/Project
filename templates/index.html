@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time Table Manager</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bevacqua/dragula@3.7.3/dist/dragula.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap" rel="stylesheet">
@@ -13,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/gh/bevacqua/dragula@3.7.3/dist/dragula.min.js"></script>
     <script defer src="{{  url_for('static', filename='index.js') }}"></script>
 </head>
-<body class="body">
+<body class="body" onload="init()">
         <div class="time-table">
             <div class="profile">
                 {% if pretty %}
@@ -74,7 +75,7 @@
                     <br>
                     <p class="quote">{{ quotes_list['quote'] }}</p>
                     <div class="welcome">
-                    <pre class="bgnd">      }</pre>
+                    <pre class="bgnd">       }</pre>
                 </div>
                     <br>
                     <p class="source"> - {{ quotes_list['source'] }}</br><span class="citation">Citation : {{ quotes_list['citation'] }}</span></br><span class="year">Year : {{ quotes_list['year'] }}</span></p>

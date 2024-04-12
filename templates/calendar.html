@@ -1,33 +1,78 @@
 {% extends 'index.html' %}
 {% block att %}
-    <link rel="stylesheet" href="/static/index.css">
-    <script src="https://cdn.jsdelivr.net/gh/bevacqua/dragula@3.7.3/dist/dragula.min.js"></script>
-    <script src="../static/index.js"></script>
-        <div class="content-pt">
-            {% for event in calendar_events %}
-            <div class="event">
-                <h3>{{ event.event_name}}</h3>
-                <p><strong>Start:</strong> {{ event.start_time }}</p>
-                <p><strong>End:</strong> {{ event.end_time }}</p>
-                <p><strong>Details: </strong>{{ event.describe }}</p>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/static/calendar.css" />
+    <div class="container">
+      <div class="left">
+        <div class="calendar">
+          <div class="month">
+            <i class="fas fa-angle-left prev"></i>
+            <div class="date">Calendar</div>
+            <i class="fas fa-angle-right next"></i>
+          </div>
+          <div class="weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
+          <div class="days"></div>
+          <div class="goto-today">
+            <div class="goto">
+              <input type="text" placeholder="mm/yyyy" class="date-input" />
+              <button class="goto-btn">Go</button>
             </div>
-            {% endfor %}
+            <button class="today-btn">Today</button>
+          </div>
         </div>
-        <div class="pre-content">
-    <form method="post" action="/calender" >
-        <span class="pt">
-             Add Events
-        </span>
-        <br>
-        <label for="task">Event</label><br>
-        <input type="text" id="task" name="event" ><br>
-        <label for="task">Start</label><br>
-        <input type="text" id="task" name="start" ><br>
-        <label for="task">End</label><br>
-        <input type="text" id="task" name="end" ><br>
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
+      </div>
+      <div class="right">
+        <div class="today-date">
+          <div class="event-day">wed</div>
+          <div class="event-date">12th december 2022</div>
         </div>
+        <div class="events"></div>
+        <div class="add-event-wrapper">
+          <div class="add-event-header">
+            <div class="title">Add Event</div>
+            <i class="fas fa-times close"></i>
+          </div>
+          <div class="add-event-body">
+            <div class="add-event-input">
+              <input type="text" placeholder="Event Name" class="event-name" />
+            </div>
+            <div class="add-event-input">
+              <input
+                type="text"
+                placeholder="Event Time From"
+                class="event-time-from"
+              />
+            </div>
+            <div class="add-event-input">
+              <input
+                type="text"
+                placeholder="Event Time To"
+                class="event-time-to"
+              />
+            </div>
+          </div>
+          <div class="add-event-footer">
+            <button class="add-event-btn">Add Event</button>
+          </div>
+        </div>
+      </div>
+      <button class="add-event">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+      <script src="/static/calendar.js"></script>
 {% endblock %}

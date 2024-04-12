@@ -8,7 +8,7 @@ divchildContainer.addEventListener('click', function(event) {
     const label = clickedDivchild.querySelector('.cbx');
     if (checkbox.checked) {
       label.classList.add('checked');
-      clickedDivchild.classList.add('removing');
+      clickedDivchild.classList.add('adjusting');
 
       applyAnimationToSiblings(clickedDivchild);
 
@@ -16,8 +16,10 @@ divchildContainer.addEventListener('click', function(event) {
         clickedDivchild.style.opacity = 0;
         setTimeout(() => {
           clickedDivchild.parentNode.removeChild(clickedDivchild);
-          adjustDivChildPositions();
-        }, 500);
+            setTimeout(() => {
+              adjustDivChildPositions();
+            },1000);
+        }, 700);
       });
     } else {
       label.classList.remove('checked');
@@ -46,13 +48,9 @@ function applyAnimationToSiblings(clickedDivchild) {
     nextSibling = nextSibling.nextElementSibling;
   }
 }
-
-
-
-
-
-
-
+//function init(){
+//    dragula([document.querySelector("#pre-content")]);
+//}
 
 
     const observer = new IntersectionObserver((entries) => {
@@ -68,4 +66,5 @@ function applyAnimationToSiblings(clickedDivchild) {
 
     const hiddenElements = document.querySelectorAll('.divchild');
     hiddenElements.forEach((el)=> observer.observe(el));
+
 
