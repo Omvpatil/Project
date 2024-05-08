@@ -1,24 +1,32 @@
 {
     "tasks": [
         {
-            "task": "adsdaw",
-            "description": "awdasdawd"
+            "task": "Coding",
+            "description": "Python coding for 2 hours "
         },
         {
-            "task": "awdsda",
-            "description": "awdawdaw"
+            "task": "Assignment ",
+            "description": "Maths Assignment submission date tomorrow"
         },
         {
-            "task": "awdasd",
-            "description": "awdadsa"
+            "task": "walking",
+            "description": "10;am"
         },
         {
-            "task": "my name is om",
-            "description": "time table manager"
+            "task": "Ompatil",
+            "description": "hello"
         },
         {
-            "task": "adaasdasd",
-            "description": "awdadasdawdadasdaw"
+            "task": "go to gym",
+            "description": "legs"
+        },
+        {
+            "task": "awdhrdfg",
+            "description": "efsdfsd"
+        },
+        {
+            "task": "adsada",
+            "description": "adawdd"
         }
     ]
 }

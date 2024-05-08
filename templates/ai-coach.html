@@ -1,5 +1,23 @@
 {% extends 'index.html' %}
 {% block att %}
+<script>
+    window.addEventListener('load', function() {
+        var preContent = document.querySelector('.pre-content');
+        var contentPt = document.querySelector('.content-pt');
+
+        var referrer = document.referrer;
+        if (referrer !== 'http://127.0.0.1:5000/ai-coach')
+
+        preContent.style.transition = 'width 0.5s ease, margin-left 0.5s ease';
+        contentPt.style.transition = 'width 0.5s ease';
+
+        setTimeout(function() {
+            preContent.style.width = '39.5%';
+            preContent.style.marginLeft = '65rem';
+            contentPt.style.width = '60rem';
+        }, 100);
+    });
+</script>
 <div class="content-pt" style="display: block;">
     <form method="post" action="/ai-coach" >
         <span class="pt">
@@ -12,23 +30,13 @@
     </form>
 </div>
 <div class="pre-content">
-    <p id="responseText"></p>
+    <div id="animatedText"></div>
 </div>
-
 <script>
-    var responseAi = "{{ responseAi }}";
-    var index = 0;
-
-    function printNextCharacter() {
-        if (index < responseAi.length) {
-            document.getElementById("responseText").innerHTML += responseAi.charAt(index);
-            index++;
-            setTimeout(printNextCharacter, 250);
-        }
-    }
-
-    printNextCharacter();
+    const chatgpt_response = {{ responseAi | tojson }};
+    document.querySelector('.pre-content').innerHTML = chatgpt_response;
+    document.getElementById('aiCoachForm').addEventListener('submit', function(event) {
+        document.getElementById('description').value = '';
+    });
 </script>
-
-
 {% endblock %}

@@ -1,3 +1,4 @@
+
 :root{
     font-size: 16px;
     font-family:'Jaldi';
@@ -7,7 +8,18 @@
     --bg-light :#a8dadc;
     --dist : 5px;
 }
-
+.tt{
+    background-size:70rem;
+    background-color:red;
+    background-repeat:no-repeat;
+    position:absolute;
+    width:109.3rem;
+    height:83.5vh;
+    border-radius:10px;
+    margin-left:1rem;
+    margin-top:1rem;
+    font-family:'Jaldi';
+}
 .nav-bar{
     color: var(--text-secondary);
     background-color:rgb(255, 255, 255);
@@ -21,6 +33,7 @@
     transition: 400ms;
     z-index: 4;
     text-overflow: clip;
+    font-family:'Jaldi';
     background-image:url("/static/images.png");
     background-size: 50rem;
     background-repeat: repeat;
@@ -36,7 +49,7 @@
     border: var(--text-primary);
     border-style: solid;
     border-spacing: 1rem;
-    transition:200ms;
+    transition:200ms ease-in-out;
     color: var(--text-secondary);
 }
 .profile{
@@ -162,7 +175,7 @@
     transition:400ms;
     border-style:none;
     border-radius:90px;
-    transition-delay:300ms;
+    transition-delay:250ms;
 }
 .nav-item2{
     font-size:1rem;
@@ -208,15 +221,13 @@
 }
 
 .nav-item{
-    padding-top: 0.5vh;
-    padding-bottom: 0.5vh;
     display: flex;
-    padding: 0;
-    margin: 0.50rem;
+    padding-top:0.5rem;
+    padding-bottom:0.5rem;
+    margin-top:1rem;
     flex-direction: column;
     font-size: 1.5rem;
     transition: 500ms;
-    width: 100%;
     align-items: center;
 }
 .time-table .date{
@@ -232,16 +243,12 @@
     font-size: 1.3rem;
 }
 .nav-item :hover{
-    font-size: 1.5rem;
-    height:3rem;
-    width: 13rem;
-    margin-top: 0.5rem;
-    /* padding-top: 0.5rem; */
-    padding-bottom: 0.5rem;
     color: var(--bg-dark);
     background-color: var(--text-secondary);
     border-radius: 10px;
-    align-content: center;
+    align-items: center;
+    width:12rem;
+    padding-left:1rem;
     transition: 300ms;
 }
 .menu{
@@ -472,9 +479,13 @@ input[type="submit"]:hover{
     color: #ffffff;
     text-decoration: none;
 }
-.nav-link:first-child fa-solid fa-list-ul {
+.nav-link fa-solid fa-list-ul {
     font-size: 50px;
-
+}
+.nav-bar:hover .fa-solid{
+    display: none;
+    opacity: 0;
+    z-index: -5;
 }
 .link-text{
     display: none;
@@ -487,7 +498,9 @@ input[type="submit"]:hover{
 
 .nav-bar:hover .link-text{
     display: block;
-    transition:300ms;
+    transition:100ms;
+    width:13rem;
+    margin-left:-1rem;
     font-family: 'Jaldi';
 }
 .nav{
@@ -526,22 +539,18 @@ input[type="submit"]:hover{
 .pre-content{
     margin-left: 79rem;
     margin-top: 2rem;
-    margin-right: var(--dist);
     background-color: var(--bg-light);
     height:78vh;
-    width: 29.5rem;
+    width: 28%;
     border-radius: 10px;
     border:1rem 1rem solid var(--bg-light);
     color: var(--bg-dark);
     padding-left: 1rem;
     padding-top: 1rem;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     position: relative;
-    flex-direction:column;
+    flex-direction:row;
     overflow-y:scroll;
-    align-items:center;
-    display:flex;
-    flex-direction:column;
     z-index: 2;
     font-family: 'Jaldi';
 }
@@ -741,6 +750,144 @@ input[type="submit"]:hover{
 #editable {
     background-color:yellow;
     flex-direction:column;
+}
+.tt{
+    background-size:70rem;
+    display:flex;
+    flex-direction:row;
+    background-color:var(--bg-light);
+    background-repeat:no-repeat;
+    position:absolute;
+    align-items:centre;
+    width:109.3rem;
+    height:83vh;
+    border-radius:10px;
+    margin-left:1.5rem;
+    margin-top:1.5rem;
+    overflow-x:scroll;
+}
+.tt::-webkit-scrollbar {
+       border-radius:10px;
+}
+.menu .day{
+    flex-direction:column;
+    position:relative;
+    width:15rem;
+    margin-left:0;
+    font-family:'Jaldi';
+    list-style-type: none;
+}
+.day ::-webkit-scrollbar {
+    border-radius:10px;
+}
+.task{
+    width:5rem;
+    height:1rem;
+    background-color:var(--text-primary);
+    position:relative;
+    font-family:'Jaldi';
+    font-size:2rem;
+    color:white;
+}
+button.task{
+    margin-top:1rem;
+    padding: 3rem 2rem;
+    padding-bottom:3rem;
+    width: auto;
+    align-items:center;
+    border-radius:50px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:row;
+    transition:opacity 300ms ease-in-out;
+    font-family:'Jaldi';
+    border:0;
+    gap:1rem;
+}
+li.text{
+    padding-bottom:0.5rem;
+    width:100%;
+    border-radius:10px;
+    background-color:var(--text-primary);
+    margin-top:2rem;
+    color:var(--bg-dark);
+    font-family:'Jaldi';
+    border:0;
+}
+.taskName{
+    margin-left:0.9rem;
+    margin-top:0.9rem;
+    font-family:'Jaldi';
+    height:10vh;
+    width:13rem;
+    font-size:2rem;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    border:0;
+}
+.taskTime{
+    margin-left:0.9rem;
+    margin-top:0.5rem;
+    margin-bottom:0.5rem;
+    width:13rem;
+    font-family:'Jaldi';
+    font-size:1rem;
+    height:5vh;
+    border:0;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+}
+button.nav-item{
+    margin-left:40rem;
+    margin-top:1.5rem;
+    position:absolute;
+    cursor:pointer;
+    border-radius:10px;
+    z-index:5;
+}
+.chat-container {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#animatedText {
+    color: var(--bg-dark);
+    font-size: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Jaldi';
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+button#save-btn{
+    position: absolute;
+    z-index:10;
+    margin: -6.75% 45%;
+    padding: 0rem 1rem;
+    border-radius:10px;
+    border-style:none;
+    font-size:2rem;
+    cursor:pointer;
+    font-family:'Jaldi';
+    color:var(--text-primary);
+    background-color:var(--bg-light);
+    transition:300ms;
+}
+button#save-btn:hover{
+    color:var(--bg-dark);
+    background-color:var(--text-secondary);
+    transition:200ms;
+}
+button.task img{
+    height:3rem;
+}
+button.submitTask{
+    background-color:var(--bg-light);
 }
 
 

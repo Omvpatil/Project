@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Table Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bevacqua/dragula@3.7.3/dist/dragula.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/gh/bevacqua/dragula@3.7.3/dist/dragula.min.js"></script>
+    <script src="{{  url_for('static', filename='index.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body class="body" onload="init() , loadTasks()">
+        <div class="time-table">
+            <div class="profile">
+                {% if pretty %}
+                <div class="nav2">
+                    <div class="bdr">
+                    <div class="nav-item20"><img class="nav-item2" id="image" src="{{ photo }}" alt="user photo"></div>
+                    <div class="nav-item21"><form action="{{ url_for('logout') }}" method="GET"><button class="nav-item-btn" type="submit">Log Out</button></form></div>
+                    <div class="nav-item22">{{pretty}}</div>
+                    </div>
+                </div>
+                    {% else %}
+                <div class="nav2">
+                    <div><form action="{{ url_for('google_login') }}" method="GET"><button class="nav-item-btn" type="submit">Login with Google</button></form></div>
+
+                </div>
+                    {% endif %}
+            </div>
+        <div class="date">
+            Date : {{today}}<br>
+            Day  : {{day_name}}
+        </div>
+        <div class="info">
+            {% if pretty !="null" %}
+                Hello {{pretty}} !
+            {% else %}
+                Hello !
+            {%endif%}
+        </div>
+        <div class="title">
+            <h1>Timetable</h1>
+        </div>
+         <button id="save-btn">save table</button>
+    </div>
+
+    <nav class="nav-bar">
+        <ul class="nav">
+            <li class="nav-item"><a href="{{ url_for('home')}}" class="nav-link"><i class="fa-solid fa-list-ul"></i><span class="link-text">Home</span></a></li>
+
+             <li class="nav-item"><a href="{{ url_for('timetable') }}" class="nav-link" ><span class="link-text">Time table</span></a></li>
+
+            <li class="nav-item"><a href="{{ url_for('priorTask') }}" class="nav-link"><span class="link-text">Prior Tasks</span></a></li>
+
+            <li class="nav-item"><a href="{{ url_for('ai') }}" class="nav-link" ><span class="link-text">AI Consultant</span></a></li>
+
+            <li class="nav-item"><a href="#" class="nav-link" ><span class="link-text">Contact us</span></a></li>
+        </ul>
+
+    </nav>
+            <div class="menu">
+                <div class="tt" id="tt">
+                    <ul class="day 1" onload="init()">
+                        <button class="task"  id="day 1" onclick="addEditableDivItem()">
+                            <img src="/static/plus.png">
+                            Monday
+                        </button>
+                    </ul>
+                    <ul class="day 2" onload="init()">
+                        <button class="task" id="day 2" onclick="addEditableDivItem()">
+                            <img src="/static/plus.png">
+                            Tuesday
+                        </button>
+                    </ul>
+                    <ul class="day 3" onload="init()">
+                        <button class="task wed" id="day 3" style="margin-left:-1rem;" onclick="addEditableDivItem()">
+                            <img src="/static/plus.png">
+                            Wednesday
+                        </button>
+                    </ul>
+                    <ul class="day 4" onload="init()">
+
+                        <button class="task" id="day 4" onclick="addEditableDivItem()">
+                            <img src="/static/plus.png">
+                            Thursday
+                        </button>
+                    </ul>
+                    <ul class="day 5" onload="init()">
+
+                        <button class="task" id="day 5" style="width:16rem;" onclick="addEditableDivItem()">
+                            <img src="/static/plus.png">
+                            Friday
+                        </button>
+                    </ul>
+                    <ul class="day 6" onload="init()">
+
+                        <button class="task" id="day 6" onclick="addEditableDivItem()">
+                            <img src="/static/plus.png">
+                            Saturday
+                        </button>
+                    </ul>
+                    <ul class="day 7" style="margin-right:3rem;" onload="init()">
+
+                        <button class="task" style="width:16rem;" id="day 7" onclick="addEditableDivItem()">
+                            <img src="/static/plus.png">
+                            Sunday
+                        </button>
+                    </ul>
+                </div>
+            </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const timeTable = [];
+
+    const parentLists = document.querySelectorAll(".day");
+    parentLists.forEach(function(parentList) {
+        parentList.addEventListener("click", function(event) {
+            if (event.target.classList.contains("editTask")) {
+                event.stopPropagation();
+                const li = event.target.closest("li");
+                const taskName = li.querySelector(".taskName");
+                const taskTime = li.querySelector(".taskTime");
+                const btnRow = li.querySelector(".btn-row");
+
+                taskName.contentEditable = true;
+                taskTime.contentEditable = true;
+                btnRow.style.marginLeft = "-4.5rem";
+                btnRow.style.transition = "400ms ease-in-out";
+
+            }
+        });
+    });
+
+    document.addEventListener("click", function(event){
+        if (event.target.classList.contains("submitTask")) {
+            event.stopPropagation();
+            const li = event.target.closest("li");
+            const taskName = li.querySelector(".taskName");
+            const taskTime = li.querySelector(".taskTime");
+            const btnRow = li.querySelector(".btn-row");
+
+            taskName.contentEditable = false;
+            taskTime.contentEditable = false;
+
+            const editTask = li.querySelector(".editTask");
+
+            btnRow.style.transition = "400ms ease-in-out";
+            btnRow.style.marginLeft = "1rem";
+
+            const obj = {
+                "day": li.parentNode.className,
+                "task": taskName.textContent,
+                "time": taskTime.textContent
+            };
+            timeTable.push(obj);
+        }
+    });
+
+
+    const saveBtn = document.getElementById("save-btn");
+    saveBtn.addEventListener("click", function() {
+        const data = JSON.stringify(timeTable);
+        sendEmailWithData(data);
+        console.log(data);
+    });
+});
+
+
+var containers = document.querySelectorAll('.day');
+var drake = dragula(Array.from(containers), {
+  isContainer: function (el) {
+    return el.classList.contains('day');
+  },
+  moves: function (el, container, handle) {
+    return handle.classList.contains('text');
+  },
+  copy: function (el, source) {
+    return false;
+  },
+  accepts: function (el, target, source, sibling) {
+    return target !== source;
+  }
+});
+
+drake.on('drop', function (el, target, source, sibling) {
+});
+
+
+    </script>
+
+</body>
+</html>
+<!--function sendEmailWithData(data) {-->
+<!--    const emailBody = JSON.stringify(data);-->
+
+<!--    fetch('https://www.googleapis.com/gmail/v1/users/me/messages/send', {-->
+<!--        method: 'POST',-->
+<!--        headers: {-->
+<!--            'Authorization': `Bearer ${accessToken}`,-->
+<!--            'Content-Type': 'application/json',-->
+<!--        },-->
+<!--        body: JSON.stringify({-->
+<!--            raw: btoa(`To: omp838765@gmail.com\nSubject: Data from client\n\n${emailBody}`),-->
+<!--        }),-->
+<!--    })-->
+<!--    .then(response => {-->
+<!--        if (!response.ok) {-->
+<!--            throw new Error('Failed to send email');-->
+<!--        }-->
+<!--        console.log('Email sent successfully');-->
+<!--    })-->
+<!--    .catch(error => {-->
+<!--        console.error('Error sending email:', error);-->
+<!--    });-->
+<!--}-->

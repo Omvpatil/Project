@@ -10,7 +10,7 @@ divchildContainer.addEventListener('click', function(event) {
       label.classList.add('checked');
       clickedDivchild.classList.add('adjusting');
 
-      applyAnimationToSiblings(clickedDivchild);
+      applyAnimation(clickedDivchild);
 
       requestAnimationFrame(function() {
         clickedDivchild.style.opacity = 0;
@@ -27,30 +27,23 @@ divchildContainer.addEventListener('click', function(event) {
   }
 });
 
-function applyAnimationToSiblings(clickedDivchild) {
-  const viewportHeight = window.innerHeight;
-  const scrolledDistance = window.scrollY;
-  const divchildRect = clickedDivchild.getBoundingClientRect();
-  const divchildTopInView = divchildRect.top >= 0 && divchildRect.top <= viewportHeight;
-  const divchildBottomInView = divchildRect.bottom >= 0 && divchildRect.bottom <= viewportHeight;
-
-  let nextSibling = clickedDivchild.nextElementSibling;
-  while (nextSibling) {
-    const siblingRect = nextSibling.getBoundingClientRect();
-    const siblingTopInView = siblingRect.top >= 0 && siblingRect.top <= viewportHeight;
-    const siblingBottomInView = siblingRect.bottom >= 0 && siblingRect.bottom <= viewportHeight;
-
-    if (siblingTopInView || siblingBottomInView) {
-      nextSibling.classList.add('adjusting');
-      const translateY = Math.max(0, (divchildRect.bottom - scrolledDistance - siblingRect.top) / 15);
-      nextSibling.style.transform = `translateY(-${translateY}px)`;
+function applyAnimation(clickedDivchild) {
+    var height = clickedDivchild.offsetHeight;
+    var parentDiv = document.getElementById('pre-content');
+    var childDivs = parentDiv.querySelectorAll('divchild');
+    var selectedDivs = [];
+    for (var i = 0; i < childDivs.length; i++) {
+        var div = childDivs[i];
+        if (div !== clickedDivchild) {
+        setTimeout(function() {
+            div.classList.add('.adjusting');
+            element.style.transform = 'translateY(-'+ height +')';
+            },1000);
+        }
     }
-    nextSibling = nextSibling.nextElementSibling;
-  }
+
 }
-//function init(){
-//    dragula([document.querySelector("#pre-content")]);
-//}
+
 
 
     const observer = new IntersectionObserver((entries) => {
@@ -66,5 +59,51 @@ function applyAnimationToSiblings(clickedDivchild) {
 
     const hiddenElements = document.querySelectorAll('.divchild');
     hiddenElements.forEach((el)=> observer.observe(el));
+
+function addEditableDivItem() {
+        var button = event.target;
+        var parent_name = button.parentNode;
+        var li = document.createElement("li");
+        li.className = "text";
+        li.id = "draggable";
+        li.style.overflow = "hidden";
+        var input1 = document.createElement("div");
+        input1.className = "taskName";
+        input1.textContent = "Enter task";
+
+        var input2 = document.createElement("div");
+        input2.className = "taskTime";
+        input2.textContent = "Enter Time";
+
+
+        var btRow = document.createElement("div");
+        btRow.className = "btn-row";
+        btRow.style.display = "flex";
+        btRow.style.flexDirection = "row";
+        btRow.style.gap = "12rem";
+        btRow.style.overflow = "hidden";
+        btRow.style.marginLeft = "1rem";
+
+        var editButton = document.createElement("button");
+        editButton.className = "editTask";
+        editButton.textContent = 'edit';
+        editButton.style.cursor = "pointer";
+
+        var saveButton = document.createElement("button");
+        saveButton.className = "submitTask";
+        saveButton.textContent = 'save';
+        saveButton.style.cursor = "pointer";
+
+        if (parent_name.nodeName === "UL") {
+        li.appendChild(input1);
+        li.appendChild(input2);
+        btRow.appendChild(editButton);
+        btRow.appendChild(saveButton);
+        li.appendChild(btRow);
+        parent_name.appendChild(li);
+        } else {
+            console.error("Parent node is not a UL element");
+        }
+}
 
 

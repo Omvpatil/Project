@@ -3,6 +3,8 @@ import requests
 import json
 import AI_coatch
 
+from pymongo import mongo_client, MongoClient
+from flask_cors import CORS
 from datetime import date
 from authlib.integrations.flask_client import OAuth
 from flask import Flask, render_template, request, session, redirect, url_for, jsonify
@@ -10,10 +12,13 @@ from flask import Flask, render_template, request, session, redirect, url_for, j
 import quotes as quotes
 
 app = Flask(__name__, static_url_path='/static')
+CORS(app)
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 client_secrets_file = os.environ.get("cs")
+mClient = MongoClient('localhost', 27017)
+db = mClient["timeTable"]
 
 appConf = {
     "OAUTH2_META_URL": "https://accounts.google.com/o/oauth2/v2/auth",
@@ -52,7 +57,7 @@ def googleCallback():
     personData = requests.get(
         personDataUrl,
         headers={
-            "Authorization": f"Bearer {token["access_token"]}"
+            "Authorization": f"Bearer {token['access_token']}"
         }
     ).json()
     token["personData"] = personData
@@ -118,47 +123,25 @@ def logout():
 def ai():
     reversed_date, day_name = Date()
     name, user_photo = userDataProfile()
+
     if request.form.get("description"):
         prompt = request.form.get("description")
     else:
-        prompt = "Tell me about how to maintain timetable for longer periods"
+        prompt = "Generate meme related to engineering"
+
     responseai = AI_coatch.generate_prompt(prompt)
     return render_template("/ai-coach.html", responseAi=responseai, pre_con=preCon(), today=reversed_date,
                            day_name=day_name,
                            photo=user_photo, pretty=name)
 
 
-@app.route("/calendar", methods=["GET", "POST"])
-def calendar():
-    if request.method == "POST":
-        Evnt = request.form['event']
-        StrTim = request.form['start_time']
-        EndTim = request.form['end_time']
-        Dscr = request.form['describe']
-
-        new_event = {
-            "event": Evnt,
-            "start_time": StrTim,
-            "end_time": EndTim,
-            "describe": Dscr
-        }
-
-        if all([Evnt, StrTim, EndTim, Dscr]):
-            try:
-                with open("events.json", 'r') as file:
-                    event_data = json.load(file)
-            except (FileNotFoundError, json.decoder.JSONDecodeError):
-                event_data = []
-
-            event_data.append(new_event)
-
-            with open("events.json", 'w') as file:
-                json.dump(event_data, file, indent=4)
-
-    name, user_photo = userDataProfile()
+@app.route("/timetable", methods=["GET", "POST"])
+def timetable():
     reversed_date, day_name = Date()
-
-    return render_template("calendar.html", today=reversed_date, day_name=day_name, photo=user_photo, pretty=name)
+    name, user_photo = userDataProfile()
+    return render_template("/timetable.html", pre_con=preCon(), today=reversed_date,
+                           day_name=day_name,
+                           photo=user_photo, pretty=name), 200
 
 
 def preCon():
